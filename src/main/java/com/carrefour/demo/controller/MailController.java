@@ -21,17 +21,12 @@ public class MailController {
     @PostMapping(value="/stubService/send")
     public void sendMail(@RequestBody Mail mail){
         SimpleMailMessage message = new SimpleMailMessage();
-        String tmp = mail.getRecipients().get(0);
-        InternetAddress v = new InternetAddress();
 
-        //message.setTo(v.parse(mail.getRecipients().toString()));
-        for(int i=0;i<mail.getRecipients().size();i++) {
-            message.setTo(mail.getRecipients().get(i));
-            message.setSubject(mail.getSubject());
-            message.setText(mail.getBody());
-            message.setSentDate(new Date());
-            System.out.println(message);
-            this.email.send(message);
-        }
+        message.setTo(mail.getRecipients().toArray(new String[0]));
+        message.setSubject(mail.getSubject());
+        message.setText(mail.getBody());
+        message.setSentDate(new Date());
+        System.out.println(message);
+        this.email.send(message);
     }
 }
