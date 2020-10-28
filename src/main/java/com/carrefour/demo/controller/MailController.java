@@ -34,5 +34,4 @@ public class MailController {
             this.email.send(message);
         }
     }
-
 }
