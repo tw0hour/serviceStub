@@ -14,8 +14,11 @@ import java.util.Date;
 @Component
 public class MailService {
 
-    @Autowired
-    public JavaMailSender mailSender;
+    private JavaMailSender mailSender;
+
+    public MailService(JavaMailSender mailSender){
+        this.mailSender = mailSender;
+    }
 
     public void sendMail(Mail mail) throws Exception {
         SimpleMailMessage message = new SimpleMailMessage();

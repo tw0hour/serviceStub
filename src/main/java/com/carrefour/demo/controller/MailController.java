@@ -18,8 +18,11 @@ import java.util.Date;
 @RestController
 public class MailController {
 
-    @Autowired
-    MailService mailService;
+    private MailService mailService;
+
+    public MailController(MailService mailService){
+        this.mailService = mailService;
+    }
 
     @PostMapping(value="/stubService/send")
     public void sendMail(@RequestBody Mail mail){
