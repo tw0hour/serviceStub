@@ -2,6 +2,7 @@ package com.carrefour.demo.controller;
 
 import com.carrefour.demo.model.Mail;
 import com.carrefour.demo.service.MailService;
+import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.MailException;
@@ -18,12 +19,13 @@ import java.util.Date;
 public class MailController {
 
     @Autowired
-    public JavaMailSender mailSender;
+    MailService mailService;
 
     @PostMapping(value="/stubService/send")
     public void sendMail(@RequestBody Mail mail){
         try{
-            MailService.sendMail(mail,mailSender);
+            mailService.sendMail(mail);
+            System.out.println("Votre mail à bien été envoyé");
         }
         catch (Exception e){
             System.err.println("Erreur survenue lors de l'envoie du message ");
