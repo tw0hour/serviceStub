@@ -1,8 +1,10 @@
 package com.carrefour.demo.controller;
 
 import com.carrefour.demo.model.Mail;
+import com.carrefour.demo.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,17 +18,16 @@ import java.util.Date;
 public class MailController {
 
     @Autowired
-    public JavaMailSender email;
+    public JavaMailSender mailSender;
 
     @PostMapping(value="/stubService/send")
     public void sendMail(@RequestBody Mail mail){
-        SimpleMailMessage message = new SimpleMailMessage();
+        try{
+            MailService.sendMail(mail,mailSender);
+        }
+        catch (Exception e){
+            System.err.println("Erreur survenue lors de l'envoie du message ");
+        }
 
-        message.setTo(mail.getRecipients().toArray(new String[0]));
-        message.setSubject(mail.getSubject());
-        message.setText(mail.getBody());
-        message.setSentDate(new Date());
-        System.out.println(message);
-        this.email.send(message);
     }
 }
