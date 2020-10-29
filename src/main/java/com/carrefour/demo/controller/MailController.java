@@ -17,13 +17,6 @@ public class MailController {
 
     @PostMapping(value="/stubService/send")
     public void sendMail(@RequestBody Mail mail){
-        try{
-            mailService.sendMail(mail);
-            System.out.println("Votre mail à bien été envoyé");
-        }
-        catch (Exception e){
-            System.err.println("Erreur survenue lors de l'envoie du message ");
-        }
-
+        mailService.sendMail(mail);
     }
 }
