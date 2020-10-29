@@ -13,7 +13,7 @@ public class MailService {
 
     public static void sendMail(Mail mail, JavaMailSender mailSender) throws Exception {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(mail.getRecipients().toString()/*toArray(new String[0])*/);
+        message.setTo(mail.getRecipients().toArray(new String[0]));
         message.setSubject(mail.getSubject());
         message.setText(mail.getBody());
         message.setSentDate(new Date());
