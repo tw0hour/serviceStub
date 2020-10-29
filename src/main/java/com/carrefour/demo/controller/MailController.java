@@ -18,7 +18,7 @@ import java.util.Date;
 @RestController
 public class MailController {
 
-    private MailService mailService;
+    private final MailService mailService;
 
     public MailController(MailService mailService){
         this.mailService = mailService;
