@@ -18,10 +18,10 @@ public class MailController {
     }
 
     @PostMapping(value="/stubService/send")
-    public ResponseEntity sendMail(@RequestBody Mail mail){
+    public ResponseEntity<String> sendMail(@RequestBody Mail mail){
         if(mailService.sendMail(mail)){
-            return new ResponseEntity("Votre mail à bien été envoyé", HttpStatus.OK);
+            return new ResponseEntity<>("Votre mail à bien été envoyé", HttpStatus.OK);
         }
-        return new ResponseEntity("Erreur survenue lors de l'envoie du message", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity("Erreur survenue lors de l'envoie du message", HttpStatus.valueOf(500));
     }
 }
