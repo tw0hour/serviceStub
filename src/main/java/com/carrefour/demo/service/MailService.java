@@ -1,8 +1,7 @@
 package com.carrefour.demo.service;
 
 import com.carrefour.demo.model.Mail;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.*;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +17,7 @@ public class MailService {
         this.mailSender = mailSender;
     }
 
-    public boolean sendMail(Mail mail) {
+    public int sendMail(Mail mail) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(mail.getRecipients().toArray(new String[0]));
         message.setSubject(mail.getSubject());
@@ -28,13 +27,22 @@ public class MailService {
 
         try{
             mailSender.send(message);
-            System.out.println("Votre mail à bien été envoyé");
-            return true;
-        }catch(MailException e){
-
-            System.err.println("Erreur survenue lors de l'envoie du message ");
+            //System.out.println("Votre mail à bien été envoyé");
+            return 1;
+        }catch(MailPreparationException e){
+            //System.err.println("Erreur survenue lors de l'envoie du message ");
+            return 2;
         }
-        return false;
+        catch (MailParseException e){
+            return 3;
+        }
+        catch(MailSendException e){
+            return 4;
+        }
+        catch(MailAuthenticationException e){
+            return 5;
+        }
+
 
     }
 }

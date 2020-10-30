@@ -19,9 +19,16 @@ public class MailController {
 
     @PostMapping(value="/stubService/send")
     public ResponseEntity<String> sendMail(@RequestBody Mail mail){
-        if(mailService.sendMail(mail)){
-            return new ResponseEntity<>("Votre mail à bien été envoyé", HttpStatus.OK);
+        switch(mailService.sendMail(mail)){
+            case 1:
+                return new ResponseEntity<>("Votre mail à bien été envoyé", HttpStatus.OK);
+            case 3 :
+                return new ResponseEntity("Parse erreur", HttpStatus.BAD_REQUEST);
+            case 4:
+                return new ResponseEntity("Erreur survenue lors de l'envoie du message", HttpStatus.valueOf(500));
+            case 5:
+                return new ResponseEntity("Erreur interne lié à l'authentification", HttpStatus.valueOf(500));
         }
-        return new ResponseEntity("Erreur survenue lors de l'envoie du message", HttpStatus.valueOf(500));
+        return new ResponseEntity<>("Votre mail à bien été envoyé", HttpStatus.OK);
     }
 }
