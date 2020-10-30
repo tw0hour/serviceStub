@@ -5,8 +5,10 @@ import org.springframework.mail.*;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
-import java.net.http.HttpResponse;
 import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 public class MailService {
@@ -18,6 +20,9 @@ public class MailService {
     }
 
     public int sendMail(Mail mail) {
+        if(mail.getRecipients() == null || mail.getBody() == null || mail.getSubject() == null || !isValidMails(mail.getRecipients())){
+            return 3;
+        }
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(mail.getRecipients().toArray(new String[0]));
         message.setSubject(mail.getSubject());
@@ -43,6 +48,15 @@ public class MailService {
             return 5;
         }
 
+    }
 
+    private boolean isValidMails(List<String> mails){
+        String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        for(String mail:mails){
+            if(!Pattern.matches(regex,mail)){
+                return false;
+            }
+        }
+        return true;
     }
 }
