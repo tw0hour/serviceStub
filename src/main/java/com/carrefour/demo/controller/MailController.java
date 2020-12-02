@@ -23,7 +23,7 @@ public class MailController {
             case 1:
                 return new ResponseEntity<>("Votre mail à bien été envoyé", HttpStatus.OK);
             case 3 :
-                return new ResponseEntity("Parse erreur : verifier la validité des champs", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity("Verifier la validité des champs", HttpStatus.BAD_REQUEST);
             case 4:
                 return new ResponseEntity("Erreur survenue lors de l'envoie du message", HttpStatus.valueOf(500));
             case 5:

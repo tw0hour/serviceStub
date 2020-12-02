@@ -23,19 +23,12 @@ public class MailService {
         if(mail.getRecipients() == null || mail.getBody() == null || mail.getSubject() == null || !isValidMails(mail.getRecipients())){
             return 3;
         }
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(mail.getRecipients().toArray(new String[0]));
-        message.setSubject(mail.getSubject());
-        message.setText(mail.getBody());
-        message.setSentDate(new Date());
-        System.out.println(message);
 
+        SimpleMailMessage message = createMimeMessage(mail);
         try{
             mailSender.send(message);
-            //System.out.println("Votre mail à bien été envoyé");
             return 1;
         }catch(MailPreparationException e){
-            //System.err.println("Erreur survenue lors de l'envoie du message ");
             return 2;
         }
         catch (MailParseException e){
@@ -47,7 +40,6 @@ public class MailService {
         catch(MailAuthenticationException e){
             return 5;
         }
-
     }
 
     private boolean isValidMails(List<String> mails){
@@ -58,5 +50,14 @@ public class MailService {
             }
         }
         return true;
+    }
+
+    public static SimpleMailMessage createMimeMessage(Mail mail){
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(mail.getRecipients().toArray(new String[0]));
+        message.setSubject(mail.getSubject());
+        message.setText(mail.getBody());
+        message.setSentDate(new Date());
+        return message;
     }
 }

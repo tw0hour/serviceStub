@@ -8,6 +8,7 @@ class stubServiceApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
 
 }
