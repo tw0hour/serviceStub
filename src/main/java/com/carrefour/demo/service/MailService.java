@@ -28,7 +28,8 @@ public class MailService {
         try{
             mailSender.send(message);
             return 1;
-        }catch(MailPreparationException e){
+        }
+        catch(MailPreparationException e){
             return 2;
         }
         catch (MailParseException e){

@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.MailParseException;
-import org.springframework.mail.javamail.JavaMailSender;
 import java.util.Arrays;
 import java.util.List;
 import com.carrefour.demo.service.MailService;
